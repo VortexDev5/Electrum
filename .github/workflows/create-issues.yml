@@ -3,6 +3,9 @@ name: Create Custom Issues
 on:
   workflow_dispatch:  # Trigger manually from GitHub UI
 
+permissions:
+  issues: write
+
 jobs:
   create_custom_issues:
     runs-on: ubuntu-latest
