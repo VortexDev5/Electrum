@@ -1,0 +1,39 @@
+name: Create Custom Issues
+
+on:
+  workflow_dispatch:  # Trigger manually from GitHub UI
+
+jobs:
+  create_custom_issues:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Different GitHub Issues
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issues = [
+              { title: "🐛 Bug: Login fails on mobile", body: "Steps to reproduce:\n1. Open site on mobile\n2. Try to login\n\nExpected: Login works\nActual: Login fails" },
+              { title: "🚀 Feature: Dark mode support", body: "Add dark theme toggle in settings." },
+              { title: "💄 UI: Improve navbar spacing", body: "The navbar looks cluttered on small screens." },
+              { title: "🛠️ Refactor: Clean up authentication logic", body: "Split logic into separate reusable functions." },
+              { title: "📈 Analytics: Track button clicks", body: "We need to know which CTA buttons users click." },
+              { title: "🔒 Security: Add rate limiting to login", body: "Prevent brute-force attacks by limiting login attempts." },
+              { title: "📝 Docs: Setup README instructions", body: "Add clear steps to set up the project locally." },
+              { title: "✅ Test: Write tests for the signup flow", body: "Cover edge cases for email validation." },
+              { title: "🌐 Localization: Support French language", body: "Translate UI strings and date formats." },
+              { title: "📦 Dependency: Update to React 18", body: "Test compatibility and update packages accordingly." }
+            ];
+
+            for (const issue of issues) {
+              const response = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: issue.title,
+                body: issue.body,
+                labels: ["auto"]
+              });
+
+              console.log(`✅ Created issue: ${response.data.html_url}`);
+            }
