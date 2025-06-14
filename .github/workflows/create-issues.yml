@@ -30,7 +30,7 @@ jobs:
             ];
 
             const milestoneTitle = "v1.0";
-            const assignees = ["your-username"]; // 👈 change to your GitHub username
+            const assignees = ["VortexDev5"]; // 👈 change to your GitHub username
 
             // Get milestone ID from title
             const { data: milestones } = await github.rest.issues.listMilestones({
